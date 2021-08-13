@@ -6,7 +6,7 @@
 [ext_resource path="res://Assets/Free/Main Characters/Ninja Frog/Run (32x32).png" type="Texture" id=4]
 [ext_resource path="res://Assets/Free/Main Characters/Ninja Frog/Jump (32x32).png" type="Texture" id=5]
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=1]
 resource_name = "hit"
 length = 0.7
 tracks/0/type = "value"
@@ -46,8 +46,7 @@ tracks/2/keys = {
 "values": [ 7 ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "idle"
+[sub_resource type="Animation" id=2]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:frame")
@@ -86,7 +85,7 @@ tracks/2/keys = {
 "values": [ 11 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "jump"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:frame")
@@ -125,7 +124,7 @@ tracks/2/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 resource_name = "run"
 length = 1.1
 loop = true
@@ -166,7 +165,7 @@ tracks/2/keys = {
 "values": [ 12 ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 10.473, 12.159 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -181,14 +180,14 @@ frame = 6
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
-anims/hit = SubResource( 3 )
-anims/idle = SubResource( 1 )
-anims/jump = SubResource( 4 )
-anims/run = SubResource( 5 )
+anims/hit = SubResource( 1 )
+anims/idle = SubResource( 2 )
+anims/jump = SubResource( 3 )
+anims/run = SubResource( 4 )
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 position = Vector2( 0.472469, 4 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="Raycasts" type="Node2D" parent="."]
 
@@ -203,3 +202,20 @@ position = Vector2( 8, 10 )
 enabled = true
 cast_to = Vector2( 0, 12 )
 collision_mask = 8
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+limit_left = -64
+limit_top = -150
+limit_right = 1000
+limit_bottom = 300
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 3.0
+drag_margin_left = 0.3
+drag_margin_top = 0.4
+drag_margin_right = 0.3
+drag_margin_bottom = 0.4
+editor_draw_limits = true
+editor_draw_drag_margin = true

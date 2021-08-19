@@ -24,6 +24,12 @@ func _physics_process(delta:float)->void:
 	
 	is_grounded = _check_is_ground()
 	
+	for plataforms in get_slide_count():
+		var collision = get_slide_collision(plataforms)
+		if collision.collider.has_method("collide_with"):
+			collision.collider.collide_with(collision, self)
+			
+	
 	_set_animation()
 
 func _get_input():

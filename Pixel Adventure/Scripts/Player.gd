@@ -5,6 +5,12 @@ var move_speed = 400
 var gravity = 1200
 var jump_force = -360
 var is_grounded
+var health = 3
+var hurted = false
+
+var knockback_dir = 1
+var knockback_int = 600
+
 onready var raycasts = $Raycasts
 
 func _ready():
@@ -27,6 +33,7 @@ func _get_input():
 	
 	if move_direction !=0:
 		$Texture.scale.x = move_direction
+		knockback_dir = move_direction
 
 func _input(event):
 	if event.is_action_pressed("jump") and is_grounded:
@@ -44,5 +51,26 @@ func _set_animation():
 		anim = "jump"
 	elif velocity.x != 0:
 		anim = "run"
+	if velocity.y > 0 and !is_grounded:
+		anim = "Fall" 
+	if hurted :
+		anim = "hit"
 	if $AnimationPlayer.assigned_animation != anim:
 		$AnimationPlayer.play(anim) 
+
+
+func _knockback():
+	velocity.x = -knockback_dir * knockback_int
+	velocity = move_and_slide(velocity)
+
+func _on_Hurtbox_body_entered(body):
+	health -= 1
+	hurted = true
+	_knockback()
+	get_node("Hurtbox/collision").set_deferred("disabled", true)
+	yield(get_tree().create_timer(0.5),"timeout")
+	get_node("Hurtbox/collision").set_deferred("disabled", false)
+	hurted = false
+	if health < 1:
+		queue_free()
+		get_tree().reload_current_scene()

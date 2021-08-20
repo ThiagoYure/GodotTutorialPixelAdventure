@@ -39,7 +39,7 @@ func _set_animation():
 func _on_Hitbox_body_entered(body):
 	hitted = true
 	health -= 1
-	body.velocity.y -= 300
+	body.velocity.y = body.jump_force/2
 	yield(get_tree().create_timer(0.2), "timeout")
 	hitted = false
 	if health < 1:
